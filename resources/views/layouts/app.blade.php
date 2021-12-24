@@ -19,7 +19,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">{{ __('messages.Main') }}</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">{{ __('messages.Sites') }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('urls.index') }}">{{ __('messages.Sites') }}</a></li>
                     </ul>
                 </div>
             </nav>

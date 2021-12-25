@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\UrlController;
-use App\Http\Controllers\UrlChekingController;
+use App\Http\Controllers\UrlCheckingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +19,4 @@ use App\Http\Controllers\UrlChekingController;
 Route::get('/', [HomePageController::class, 'home'])
     ->name('home');
 Route::resource('urls', UrlController::class)->only(['index', 'store', 'show']);
-Route::resource('urls', UrlCheckingController::class)->only(['store']);
+Route::resource('urls.checks', UrlCheckingController::class)->only(['store']);

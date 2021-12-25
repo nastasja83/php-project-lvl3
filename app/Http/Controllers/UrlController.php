@@ -12,14 +12,14 @@ class UrlController extends Controller
 {
     public function index()
     {
+        $urls = DB::table('urls')->paginate();
         $lastChecked = DB::table('url_checks')
-            ->distinct('url_id')
             ->orderBy('url_id')
             ->latest()
+            ->distinct('url_id')
             ->get()
             ->keyBy('url_id');
-        $urls = DB::table('urls')->paginate();
-        return view('url.index', compact($urls, $lastChecked));
+        return view('url.index', compact('urls', 'lastChecked'));
     }
 
     public function store(Request $request)

@@ -8,15 +8,9 @@ use Tests\TestCase;
 
 class HomePageControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
+    public function testHome(): void
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $response = $this->get(route('home'));
+        $response->assertOk();
     }
 }

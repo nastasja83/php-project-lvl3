@@ -2,21 +2,44 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 use Tests\TestCase;
 
 class UrlChekingControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
+    protected function setUp(): void
     {
-        $response = $this->get('/');
+        parent::setUp();
+    }
 
-        $response->assertStatus(200);
+    public function testStore()
+    {
+        $data = [
+            'name' => 'http://example.ru',
+            'created_at' => Carbon::now()->toString(),
+            'updated_at' => Carbon::now()->toString()
+        ];
+
+        $id = DB::table('urls')->insertGetId($data);
+
+        $testHtmlPath = __DIR__ . '/../Fixtures/test.html';
+        $testContent = file_get_contents($testHtmlPath);
+
+        Http::fake([$data['name'] => Http::response($testContent, 200)]);
+
+        $expectedData = [
+            'url_id' => $id,
+            'status_code' => 200,
+            'h1' => 'test_header',
+            'title' => 'example',
+            'description' => 'test_description'
+        ];
+
+        $response = $this->post(route('urls.checks.store', $id));
+        $response->assertSessionHasNoErrors();
+        $response->assertRedirect();
+        $this->assertDatabaseHas('url_checks', $expectedData);
     }
 }

@@ -33,3 +33,6 @@ lint:
 
 lint-fix:
 	composer phpcbf
+
+test-coverage:
+	php artisan test --coverage-clover build/logs/clover.xml

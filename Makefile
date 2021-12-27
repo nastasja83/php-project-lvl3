@@ -35,4 +35,4 @@ lint-fix:
 	composer phpcbf
 
 test-coverage:
-	php artisan test --coverage-clover build/logs/clover.xml
+	composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml

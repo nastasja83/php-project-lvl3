@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use Tests\TestCase;
+use Exception;
 
 class UrlChekingControllerTest extends TestCase
 {
@@ -26,6 +27,9 @@ class UrlChekingControllerTest extends TestCase
 
         $testHtmlPath = __DIR__ . '/../Fixtures/test.html';
         $testContent = file_get_contents($testHtmlPath);
+        if ($testContent === false) {
+            throw new Exception('File not found');
+        }
 
         Http::fake([$data['name'] => Http::response($testContent, 200)]);
 

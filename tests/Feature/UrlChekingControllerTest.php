@@ -25,7 +25,7 @@ class UrlChekingControllerTest extends TestCase
 
         $id = DB::table('urls')->insertGetId($data);
 
-        $testHtmlPath = __DIR__ . '/../Fixtures/test.html';
+        $testHtmlPath = __DIR__ . '/../Fixtures/fake.html';
         $testContent = file_get_contents($testHtmlPath);
         if ($testContent === false) {
             throw new Exception('File not found');

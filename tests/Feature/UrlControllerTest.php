@@ -31,14 +31,17 @@ class UrlControllerTest extends TestCase
         $response = $this->post(route('urls.store'), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
+        $response->assertSeeText($data['name']);
 
         $this->assertDatabaseHas('urls', $data['url']);
     }
 
     public function testShow()
     {
-        $id = DB::table('urls')->insertGetId(['name' => 'https://example3.com']);
+        $name = 'https://example3.com';
+        $id = DB::table('urls')->insertGetId(['name' => $name]);
         $response = $this->get(route('urls.show', ['url' => $id]));
         $response->assertOk();
+        $response->assertSeeText($name);
     }
 }

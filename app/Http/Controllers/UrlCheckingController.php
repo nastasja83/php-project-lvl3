@@ -24,12 +24,12 @@ class UrlCheckingController extends Controller
 
             DB::table('url_checks')->insert([
                     'url_id' => $id,
-                    'created_at' => Carbon::now()->toString(),
+                    'created_at' => Carbon::now(),
                     'status_code' => $response->status(),
                     'h1' => $h1,
                     'title' => $title,
                     'description' => $description,
-                    'updated_at' => Carbon::now()->toString()
+                    'updated_at' => Carbon::now()
             ]);
 
             flash(__('messages.Page has been checked successfully'))->success();

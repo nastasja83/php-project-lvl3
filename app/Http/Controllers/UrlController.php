@@ -19,7 +19,7 @@ class UrlController extends Controller
             ->distinct('url_id')
             ->get()
             ->keyBy('url_id');
-        return view('urls.index', compact('urls', 'lastChecked'));
+        return view('urls.index', compact('urls', 'lastChecks'));
     }
 
     public function store(Request $request)

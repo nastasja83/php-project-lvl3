@@ -13,13 +13,13 @@ class UrlController extends Controller
     public function index()
     {
         $urls = DB::table('urls')->paginate();
-        $lastChecked = DB::table('url_checks')
+        $lastChecks = DB::table('url_checks')
             ->orderBy('url_id')
             ->latest()
             ->distinct('url_id')
             ->get()
             ->keyBy('url_id');
-        return view('url.index', compact('urls', 'lastChecked'));
+        return view('urls.index', compact('urls', 'lastChecked'));
     }
 
     public function store(Request $request)
@@ -36,7 +36,7 @@ class UrlController extends Controller
         }
 
         $parsedUrl = parse_url($data['name']);
-        $normalizedUrl = "{$parsedUrl['scheme']}://{$parsedUrl['host']}";
+        $normalizedUrl = strtolower("{$parsedUrl['scheme']}://{$parsedUrl['host']}");
 
         $url = DB::table('urls')
             ->where('name', $normalizedUrl)
@@ -45,8 +45,8 @@ class UrlController extends Controller
         if (is_null($url)) {
             $id = DB::table('urls')->insertGetId([
                     'name' => $normalizedUrl,
-                    'created_at' => Carbon::now()->toString(),
-                    'updated_at' => Carbon::now()->toString()
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
             ]);
             flash(__('messages.The page has been added successfully'))->success();
         } else {
@@ -68,6 +68,6 @@ class UrlController extends Controller
             ->latest()
             ->paginate();
 
-        return view('url.show', compact('url', 'urlChecks'));
+        return view('urls.show', compact('url', 'urlChecks'));
     }
 }

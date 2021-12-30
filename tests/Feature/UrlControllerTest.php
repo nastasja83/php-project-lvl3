@@ -27,12 +27,12 @@ class UrlControllerTest extends TestCase
 
     public function testStore()
     {
-        $name = 'https://example2.ru';
+        $name = 'https://example2.com';
         $data = ['url' => ['name' => $name]];
         $response = $this->post(route('urls.store'), $data);
         $response->assertSessionHasNoErrors();
-        $response->assertRedirect();
-        $response->assertSeeText($name);
+        $url = DB::table('urls')->where(['name' => $name])->first();
+        $response->assertRedirect(route('urls.show', ['url' => $url->id]));
 
         $this->assertDatabaseHas('urls', $data['url']);
     }

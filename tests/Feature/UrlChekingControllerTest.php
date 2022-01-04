@@ -19,8 +19,8 @@ class UrlChekingControllerTest extends TestCase
     {
         $data = [
             'name' => 'http://example.ru',
-            'created_at' => Carbon::now()->toString(),
-            'updated_at' => Carbon::now()->toString()
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
         ];
 
         $id = DB::table('urls')->insertGetId($data);
